@@ -48,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen>
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/assets.png'),
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.fill,
           ),
         ),
         child: Column(
@@ -60,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen>
               "We show weather for you",
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 35,
+                fontSize: 25,
               ),
             ),
             _SkipButton(),
@@ -80,7 +80,7 @@ class _SplashScreenState extends State<SplashScreen>
         );
       },
       color: Colors.blue,
-      minWidth: _deviceWidth! * 0.80,
+      minWidth: _deviceWidth! * 0.70,
       height: _deviceHeight! * 0.10,
       child: const Text(
         "skip",
