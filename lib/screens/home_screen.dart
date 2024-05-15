@@ -89,73 +89,62 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Widget _locationHeader() {
-  //   return Text(
-  //     _weather?.areaName ?? "",
-  //     style: const TextStyle(
-  //       fontSize: 20,
-  //       fontWeight: FontWeight.w500,
-  //     ),
-  //   );
-  // }
-  // Widget _locationHeader() {
-  //   return DropdownButton<String>(
-  //     value: _weather?.areaName ?? "", // Set the current value
-  //     onChanged: (value) {
-  //       // Handle the value change here
-
-  //       // You can add your logic to update the weather data based on the selected location
-  //     },
-  //     items:
-  //         <String>['Nepal ', 'India', 'Chaina', 'America'] // Example locations
-  //             .map<DropdownMenuItem<String>>((String value) {
-  //       return DropdownMenuItem<String>(
-  //         value: value,
-  //         child: Text(value),
-  //       );
-  //     }).toList(),
-  //     style: const TextStyle(
-  //       fontSize: 20,
-  //       fontWeight: FontWeight.w500,
-  //     ),
-  //   );
-  // }
-
   Widget _locationHeader() {
-    return DropdownButton<String>(
-      value: _weather?.areaName ?? "", // Set the current value
-      onChanged: (String? newValue) {
-        // Fetch weather data for the selected location
-        if (newValue != null) {
-          _fetchWeatherData(newValue);
-        }
-      },
-      items: <String>['Nepal', 'India', 'China', 'Dubai'] // Example locations
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-      style: const TextStyle(
-        fontSize: 20,
-        color: Colors.black,
-        fontWeight: FontWeight.w500,
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: DropdownButton<String>(
+        value: _weather?.areaName ?? "",
+        onChanged: (String? newValue) {
+          if (newValue != null) {
+            _fetchWeatherData(newValue);
+          }
+        },
+        items: <String>['Nepal', 'China', 'Dubai']
+            .map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            ),
+          );
+        }).toList(),
+        style: const TextStyle(
+          fontSize: 16.0,
+          color: Colors.black,
+        ),
+        icon: const Icon(
+          Icons.arrow_drop_down,
+          color: Colors.black,
+        ),
+        underline: const SizedBox(),
       ),
     );
   }
 
   Future<void> _fetchWeatherData(String location) async {
     try {
-      // Fetch weather data for the selected location
       Weather weather = await _wl.currentWeatherByCityName(location);
       setState(() {
-        // Update weather data with the new data
         _weather = weather;
       });
     } catch (e) {
-      // Handle errors, such as API call failures
-      print("Error fetching weather data: $e");
+      //print("Error fetching weather data: $e");
     }
   }
 
