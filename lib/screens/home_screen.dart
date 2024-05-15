@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:weather/weather.dart';
@@ -34,14 +36,15 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (_) => const SplashScreen(),
-                  ),
-                );
-              },
-              icon: const Icon(Icons.info))
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const SplashScreen(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.info),
+          ),
         ],
       ),
       body: _buildUI(),
@@ -144,7 +147,8 @@ class _HomeScreenState extends State<HomeScreen> {
         _weather = weather;
       });
     } catch (e) {
-      //print("Error fetching weather data: $e");
+      print("Error fetching weather data: $e");
+      // Display error message to user or handle appropriately
     }
   }
 
