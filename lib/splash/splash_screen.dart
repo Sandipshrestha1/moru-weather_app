@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen>
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/assets.png'),
             fit: BoxFit.fill,
@@ -56,21 +56,21 @@ class _SplashScreenState extends State<SplashScreen>
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               "We show weather for you",
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 25,
               ),
             ),
-            _SkipButton(),
+            _skipButton(),
           ],
         ),
       ),
     );
   }
 
-  Widget _SkipButton() {
+  Widget _skipButton() {
     return MaterialButton(
       onPressed: () {
         Navigator.of(context).pushReplacement(

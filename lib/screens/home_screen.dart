@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Weather app"),
+        title: const Text("Weather app"),
         centerTitle: true,
         actions: [
           IconButton(
@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
               },
-              icon: Icon(Icons.info))
+              icon: const Icon(Icons.info))
         ],
       ),
       body: _buildUI(),
@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       width: MediaQuery.sizeOf(context).width,
       height: MediaQuery.sizeOf(context).height,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -89,14 +89,74 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Widget _locationHeader() {
+  //   return Text(
+  //     _weather?.areaName ?? "",
+  //     style: const TextStyle(
+  //       fontSize: 20,
+  //       fontWeight: FontWeight.w500,
+  //     ),
+  //   );
+  // }
+  // Widget _locationHeader() {
+  //   return DropdownButton<String>(
+  //     value: _weather?.areaName ?? "", // Set the current value
+  //     onChanged: (value) {
+  //       // Handle the value change here
+
+  //       // You can add your logic to update the weather data based on the selected location
+  //     },
+  //     items:
+  //         <String>['Nepal ', 'India', 'Chaina', 'America'] // Example locations
+  //             .map<DropdownMenuItem<String>>((String value) {
+  //       return DropdownMenuItem<String>(
+  //         value: value,
+  //         child: Text(value),
+  //       );
+  //     }).toList(),
+  //     style: const TextStyle(
+  //       fontSize: 20,
+  //       fontWeight: FontWeight.w500,
+  //     ),
+  //   );
+  // }
+
   Widget _locationHeader() {
-    return Text(
-      _weather?.areaName ?? "",
-      style: TextStyle(
+    return DropdownButton<String>(
+      value: _weather?.areaName ?? "", // Set the current value
+      onChanged: (String? newValue) {
+        // Fetch weather data for the selected location
+        if (newValue != null) {
+          _fetchWeatherData(newValue);
+        }
+      },
+      items: <String>['Nepal', 'India', 'China', 'Dubai'] // Example locations
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+      style: const TextStyle(
         fontSize: 20,
+        color: Colors.black,
         fontWeight: FontWeight.w500,
       ),
     );
+  }
+
+  Future<void> _fetchWeatherData(String location) async {
+    try {
+      // Fetch weather data for the selected location
+      Weather weather = await _wl.currentWeatherByCityName(location);
+      setState(() {
+        // Update weather data with the new data
+        _weather = weather;
+      });
+    } catch (e) {
+      // Handle errors, such as API call failures
+      print("Error fetching weather data: $e");
+    }
   }
 
   Widget _dateTimeInfo() {
@@ -161,7 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _currentTemp() {
     return Text(
       " ${_weather?.temperature?.celsius?.toStringAsFixed(0)}°c",
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 30,
       ),
     );
@@ -175,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
         color: Colors.deepPurpleAccent,
         borderRadius: BorderRadius.circular(20),
       ),
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
